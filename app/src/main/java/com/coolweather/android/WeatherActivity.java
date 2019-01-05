@@ -138,6 +138,25 @@ public class WeatherActivity extends AppCompatActivity {
                         navView.setVisibility(View.GONE);
                         chooseArea.setVisibility(View.VISIBLE);
                         break;
+                    case R.id.nav_friends:
+                        Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_location:
+                        Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_mail:
+                        Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_task:
+                        Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent=new Intent(WeatherActivity.this,AutoUpdateSettingActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_share:
+                        Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
+                        break;
                 }
                 return false;
             }
@@ -255,8 +274,16 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(this, AutoUpdateService.class);
-        startService(intent);
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isAuto = pref.getBoolean("auto_update", true);
+        if(isAuto){
+            Intent startIntent = new Intent(this, AutoUpdateService.class);
+            startService(startIntent);
+        }else {
+            Intent stopIntent = new Intent(this, AutoUpdateService.class);
+            stopService(stopIntent);
+        }
     }
 
 }

@@ -25,6 +25,7 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".AutoUpdateSettingActivity"></activity>
     </application>
 
 </manifest>

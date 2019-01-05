@@ -26,7 +26,7 @@
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
         <item
-            android:id="@+id/share"
+            android:id="@+id/nav_share"
             android:icon="@drawable/share_48px"
             android:title="分享" />
     </group>
