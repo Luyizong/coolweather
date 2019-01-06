@@ -1,5 +1,6 @@
 package com.coolweather.android;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -102,8 +104,8 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navButton = (Button) findViewById(R.id.nav_button);
-        navView=(NavigationView)findViewById(R.id.nav_view);
-        chooseArea=(FrameLayout) findViewById(R.id.choose_area);
+        navView = (NavigationView) findViewById(R.id.nav_view);
+        chooseArea = (FrameLayout) findViewById(R.id.choose_area);
         chooseArea.setVisibility(View.GONE);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
@@ -133,7 +135,7 @@ public class WeatherActivity extends AppCompatActivity {
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_city:
                         navView.setVisibility(View.GONE);
                         chooseArea.setVisibility(View.VISIBLE);
@@ -142,7 +144,22 @@ public class WeatherActivity extends AppCompatActivity {
                         Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_location:
-                        Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
+                        final String[] items = new String[]{"显示我所在位置的天气", "在地图上选择地理位置",};
+                        AlertDialog alertDialog = new AlertDialog.Builder(WeatherActivity.this)
+                                .setTitle("请选择定位方式")
+                                .setIcon(R.drawable.ic_local)
+                                .setItems(items, new DialogInterface.OnClickListener() {//添加列表
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (i == 0) {
+                                            Toast.makeText(WeatherActivity.this, "111111", Toast.LENGTH_SHORT).show();
+                                        } else if (i == 1) {
+                                            Toast.makeText(WeatherActivity.this, "2222222222", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                })
+                                .create();
+                        alertDialog.show();
                         break;
                     case R.id.nav_mail:
                         Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
@@ -151,7 +168,7 @@ public class WeatherActivity extends AppCompatActivity {
                         Toast.makeText(WeatherActivity.this, "暂不支持该功能", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_settings:
-                        Intent intent=new Intent(WeatherActivity.this,AutoUpdateSettingActivity.class);
+                        Intent intent = new Intent(WeatherActivity.this, AutoUpdateSettingActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.nav_share:
@@ -277,10 +294,10 @@ public class WeatherActivity extends AppCompatActivity {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isAuto = pref.getBoolean("auto_update", true);
-        if(isAuto){
+        if (isAuto) {
             Intent startIntent = new Intent(this, AutoUpdateService.class);
             startService(startIntent);
-        }else {
+        } else {
             Intent stopIntent = new Intent(this, AutoUpdateService.class);
             stopService(stopIntent);
         }

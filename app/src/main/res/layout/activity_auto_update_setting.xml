@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="(℃)"
+            android:text="摄氏度(℃)"
             android:textSize="15sp" />
 
     </RelativeLayout>
@@ -148,29 +148,31 @@
                 android:id="@+id/time1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="1小时" />
 
             <RadioButton
                 android:id="@+id/time2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="2小时" />
 
             <RadioButton
                 android:id="@+id/time3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="5小时" />
 
-        </RadioGroup>
+            <RadioButton
+                android:id="@+id/time4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="自定义" />
 
-        <TextView
-            android:id="@+id/time4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="自定义" />
+        </RadioGroup>
 
     </RelativeLayout>
 

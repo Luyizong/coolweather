@@ -36,9 +36,9 @@ public class AutoUpdateService extends Service {
         updateWeather();
         updateBingPic();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        float hour = pref.getFloat("hour", 1);
+        int hour = pref.getInt("hour", 1);
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int anHour = (int) hour * 60 * 60 * 1000; // 这是hour小时的毫秒数
+        int anHour = hour * 60 * 60 * 1000; // 这是hour小时的毫秒数
         long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
         Intent i = new Intent(this, AutoUpdateService.class);
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
