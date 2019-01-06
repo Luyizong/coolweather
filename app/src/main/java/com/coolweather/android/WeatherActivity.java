@@ -154,7 +154,8 @@ public class WeatherActivity extends AppCompatActivity {
                                         if (i == 0) {
                                             Toast.makeText(WeatherActivity.this, "111111", Toast.LENGTH_SHORT).show();
                                         } else if (i == 1) {
-                                            Toast.makeText(WeatherActivity.this, "2222222222", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(WeatherActivity.this, MapActivity.class);
+                                            startActivity(intent);
                                         }
                                     }
                                 })
