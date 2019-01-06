@@ -50,6 +50,7 @@ public class MapActivity extends AppCompatActivity {
         mapView = (MapView) findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
+        positionText = (TextView) findViewById(R.id.position_text_view);
         List<String> permissionList = new ArrayList<>();
 
         if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -150,7 +151,7 @@ public class MapActivity extends AppCompatActivity {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-
+            //
             StringBuilder currentPosition = new StringBuilder();
             currentPosition.append("纬度：").append(location.getLatitude()).append("\n");
             currentPosition.append("经线：").append(location.getLongitude()).append("\n");
