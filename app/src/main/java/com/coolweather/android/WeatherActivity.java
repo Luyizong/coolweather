@@ -1,5 +1,6 @@
 package com.coolweather.android;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,13 +28,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.coolweather.android.db.City;
 import com.coolweather.android.gson.Forecast;
 import com.coolweather.android.gson.Weather;
 import com.coolweather.android.service.AutoUpdateService;
 import com.coolweather.android.util.HttpUtil;
 import com.coolweather.android.util.Utility;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -152,7 +157,17 @@ public class WeatherActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         if (i == 0) {
-                                            Toast.makeText(WeatherActivity.this, "111111", Toast.LENGTH_SHORT).show();
+                                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
+                                            String currentProvince =prefs.getString("current_pro", null);
+                                            String currentCity =prefs.getString("current_city", null);
+                                            String currentCounty =prefs.getString("current_dis", null);
+                                            //暂时代码
+                                            String weatherId="CN101300101";  //南宁的weatherId
+                                            drawerLayout.closeDrawers();
+                                            swipeRefresh.setRefreshing(true);
+                                            requestWeather(weatherId);
+                                            //
+                                            Toast.makeText(WeatherActivity.this, currentProvince+currentCity+currentCounty, Toast.LENGTH_SHORT).show();
                                         } else if (i == 1) {
                                             Intent intent = new Intent(WeatherActivity.this, MapActivity.class);
                                             startActivity(intent);

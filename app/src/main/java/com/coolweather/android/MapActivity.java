@@ -1,7 +1,9 @@
 package com.coolweather.android;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +38,7 @@ public class MapActivity extends AppCompatActivity {
 
     private boolean isFirstLocate = true;
 
-    private int count=1;
+    private int count = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +75,15 @@ public class MapActivity extends AppCompatActivity {
     }
 
     private void navigateTo(BDLocation location) {
-        if (count<3) {
-            if(count==2){
+        if (count < 3) {
+            if (count == 2) {
                 Toast.makeText(this, location.getAddrStr(), Toast.LENGTH_LONG).show();
+                //
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(MapActivity.this).edit();
+                editor.putString("current_pro", location.getProvince());
+                editor.putString("current_city", location.getCity());
+                editor.putString("current_dis", location.getDistrict());
+                editor.apply();
             }
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
@@ -151,23 +159,24 @@ public class MapActivity extends AppCompatActivity {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            //
-            StringBuilder currentPosition = new StringBuilder();
-            currentPosition.append("纬度：").append(location.getLatitude()).append("\n");
-            currentPosition.append("经线：").append(location.getLongitude()).append("\n");
-            currentPosition.append("国家：").append(location.getCountry()).append("\n");
-            currentPosition.append("省：").append(location.getProvince()).append("\n");
-            currentPosition.append("市：").append(location.getCity()).append("\n");
-            currentPosition.append("区：").append(location.getDistrict()).append("\n");
-            currentPosition.append("街道：").append(location.getStreet()).append("\n");
-            currentPosition.append("定位方式：");
-            if (location.getLocType() == BDLocation.TypeGpsLocation) {
-                currentPosition.append("GPS");
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
-                currentPosition.append("网络");
-            }
-            positionText.setText(currentPosition);
-            //
+            /**
+             StringBuilder currentPosition = new StringBuilder();
+             currentPosition.append("纬度：").append(location.getLatitude()).append("\n");
+             currentPosition.append("经线：").append(location.getLongitude()).append("\n");
+             currentPosition.append("国家：").append(location.getCountry()).append("\n");
+             currentPosition.append("省：").append(location.getProvince()).append("\n");
+             currentPosition.append("市：").append(location.getCity()).append("\n");
+             currentPosition.append("区：").append(location.getDistrict()).append("\n");
+             currentPosition.append("街道：").append(location.getStreet()).append("\n");
+             currentPosition.append("定位方式：");
+             if (location.getLocType() == BDLocation.TypeGpsLocation) {
+             currentPosition.append("GPS");
+             } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
+             currentPosition.append("网络");
+             }
+             positionText.setText(currentPosition);
+             **/
+            positionText.setText(location.getProvince() + location.getCity() + location.getDistrict());
             if (location.getLocType() == BDLocation.TypeGpsLocation
                     || location.getLocType() == BDLocation.TypeNetWorkLocation) {
                 navigateTo(location);
